@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thoughts</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Share Your Thought 💭</h1>
+        <input type="text" id="thoughtInput" placeholder="Type your thought here..." />
+        <button onclick="handleClick()">Submit</button>
+    </div>
+
+    <script>
+        async function handleClick() {
+            const thought = document.getElementById('thoughtInput').value;
+
+            if (!thought.trim()) {
+                alert("Please enter a thought!");
+                return;
+            }
+
+            const response = await fetch('/thoughts', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text: thought })
+            });
+
+            if (response.ok) {
+                alert("Thought saved! ✅");
+                document.getElementById('thoughtInput').value = "";
+            } else {
+                alert("Failed to save thought. ❌");
+            }
+        }
+    </script>
+</body>
+</html>
